@@ -37,4 +37,5 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
 
     result = eval(math)
 
-    return result
+    if isinstance(result, int):
+        return (re.sub('\*', '\\\*' , math), result)
