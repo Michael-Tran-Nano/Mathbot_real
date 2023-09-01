@@ -19,13 +19,22 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
     # Get the operators
     ope = re.sub('[^-\+\*]', '', my_str)
 
-    # Check if hats exist. Return that hat if it does not exist
-    for hat in hats:
+    # String for calculating
+    nohat = len(hats)
+    math = ''
+
+    # Make the string for evaluation
+    for no, hat in enumerate(hats):
+
+        # Check if hats exist. Return that hat if it does not exist
         if hat not in pridict:
             return hat
+        else:
+            math += str(pridict[hat])
 
-    # Calculate the result
-    math = str(pridict[hats[0]]) + ope[0] + str(pridict[hats[1]]) + ope[1] + str(pridict[hats[2]]) # make something to stop it if it has too many hats, maybe use pop
+            if no < nohat - 1:
+                math += ope[no]
+
     result = eval(math)
 
     return result
