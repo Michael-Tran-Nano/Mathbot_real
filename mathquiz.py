@@ -8,6 +8,7 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
     prices = pd.read_excel('prices.xlsx')
     pridict = {}
 
+    # Fill the dictionary
     for index, row in prices.iterrows():
         pridict[row['Hat'].lower()] = row['Price']
 
@@ -37,5 +38,6 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
 
     result = eval(math)
 
+    # Give result as a tuple
     if isinstance(result, int):
         return (re.sub('\*', '\\\*' , math), result)
