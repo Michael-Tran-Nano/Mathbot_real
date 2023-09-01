@@ -3,15 +3,14 @@ import responses
 
 async def send_message(message, user_message, is_private):
     try:
-        response, file = responses.handle_response(user_message)
-
-        # discord.File('red.png')
+        response, file = responses.handle_response(user_message, message.author.mention)
 
         if is_private:
             await message.author.send(response, file=file)
         else:
             await message.channel.send(response, file=file)
 
+    # If something failed
     except Exception as e:
         print(e)
 
@@ -36,6 +35,7 @@ def run_discord_bot():
 
         print(f'{username} said: "{user_message}" ({channel})')
 
+        #Check if it is a private message, and send relevant information
         if user_message[0] == '?':
             user_message = user_message[1:] 
             await send_message(message, user_message, is_private=True)
