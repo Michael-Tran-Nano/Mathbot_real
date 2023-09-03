@@ -26,6 +26,8 @@ def run_discord_bot():
 
     @client.event
     async def on_message(message):
+
+        # Do nothing if it is from itself.
         if message.author == client.user:
             return
         

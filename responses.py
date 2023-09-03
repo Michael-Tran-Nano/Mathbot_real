@@ -34,17 +34,16 @@ def handle_response(message, name): # You get string and or file name
 
         return f'The time for next task at Ryttern is at XX:{int(time):02d}', None
     
-    if p_message[:8] == 'set time':
+    if p_message.startswith('set time'):
         
-        # Add only the numbers to the string
-        no = re.sub('[^0-9]', '', p_message)
+        # Take the number from the string
+        no = int(re.sub('[^0-9]', '', p_message))
 
         # Check if valid string
-        if 0 <= int(no) < 60:
+        if 0 <= no < 60:
             with open('time.txt', 'w') as f:
-                f.write(no)
-            return f'The new time has been set to XX:{no}', None
-        
+                f.write(str(no))
+            return f'The new time has been set to XX:{no:02d}', None
         else:
             return f'\"{no}\" is not recognized as a valid time. Please use a number in the range 0-59', None
 
