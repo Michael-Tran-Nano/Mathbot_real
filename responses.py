@@ -16,7 +16,7 @@ def handle_response(message, name): # You get string and or file name
                     ("Hello let\'s dig a lot of maps today :bone: :map:", None),
                     (":wink:", None)]
         
-        return messages[random.randint(0, len(messages) - 1)]
+        return random.choice(messages)
     
     if p_message == 'gib motivation':
         return ":tada: :partying_face: :tada:", discord.File('proud.gif')
