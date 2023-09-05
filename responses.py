@@ -34,6 +34,10 @@ def handle_response(message, name): # You get string and or file name
 
         return f'The time for next task at Ryttern is at XX:{int(time):02d}', None
     
+    if p_message == "bomb ryttern":
+        return (":bomb: :bomb: :bomb:",
+                discord.File(random.choice(['bomb1.gif', 'bomb2.gif'])))
+
     if p_message.startswith('set time'):
         
         # Take the number from the string
