@@ -1,4 +1,5 @@
 from mathquiz import answer
+from quiz import quizanswer
 import random
 import discord
 import re
@@ -18,27 +19,27 @@ def handle_response(message, name): # You get string and or file name
         
         return random.choice(messages)
     
-    if p_message == 'gib motivation':
+    elif p_message == 'gib motivation':
         return ":tada: :partying_face: :tada:", discord.File('proud.gif')
     
-    if p_message == '69':
+    elif p_message == '69':
         return "( ͡° ͜ʖ ͡°)", None
     
-    if p_message == 'hurray':
+    elif p_message == 'hurray':
         return r'https://tenor.com/view/yay-sponge-bob-happy-celebration-job-gif-19821202', None
 
-    if p_message == 'time':
+    elif p_message == 'time':
 
         with open('time.txt', 'r') as f:
             time = f.readline()
 
         return f'The time for next task at Ryttern is at XX:{int(time):02d}', None
     
-    if p_message == "bomb ryttern":
+    elif p_message == "bomb ryttern":
         return (":bomb: :bomb: :bomb:",
                 discord.File(random.choice(['bomb1.gif', 'bomb2.gif'])))
 
-    if p_message.startswith('set time'):
+    elif p_message.startswith('set time'):
         
         # Take the number from the string
         no = int(re.sub('[^0-9]', '', p_message))
@@ -52,7 +53,7 @@ def handle_response(message, name): # You get string and or file name
             return f'\"{no}\" is not recognized as a valid time. Please use a number in the range 0-59', None
 
     # Math equation given
-    if p_message[0] == '!':
+    elif p_message[0] == '!':
 
         try:
             result = answer(p_message[1:])
@@ -70,3 +71,14 @@ def handle_response(message, name): # You get string and or file name
         # make something for the time
 
         # Answer quiz questions?
+
+    # Quiz question
+    elif p_message[0] == '%':
+        result = quizanswer(p_message[1:])
+
+        if isinstance(result, str):
+            return f"The answer is: {result}", None
+        elif isinstance(result, list):
+            return f"Possible answers {result}", None
+        else:
+            return "Answer not found :( Please ask Kartoffel to add it", None
