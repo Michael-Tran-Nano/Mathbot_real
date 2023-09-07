@@ -1,5 +1,5 @@
 from mathquiz import answer
-from quiz import quizanswer
+from quiz import quizanswer, quizanswers
 import random
 import discord
 import re
@@ -62,7 +62,7 @@ def handle_response(message, name): # You get string and or file name
                 return f'The answer is: {math} = {total}', None
             
             elif isinstance(result, str):
-                return f'The hat <{result}> is not found in my price list. Please ask Kartoffel to update it', None
+                return f'The hat <{result}> is not found in my price list. Please ask Kartoffel to update it (use % if you meant to ask about a quiz question)', None
             else:
                 return "Something went wrong :( Try again", None
         except Exception:
@@ -74,6 +74,12 @@ def handle_response(message, name): # You get string and or file name
 
     # Quiz question
     elif p_message[0] == '%':
+        
+        # Get all questions and answers
+        if p_message == r"%answers":
+            return quizanswers(), None
+        
+        # Find answer to specific question
         result = quizanswer(p_message[1:])
 
         if isinstance(result, str):
@@ -81,4 +87,7 @@ def handle_response(message, name): # You get string and or file name
         elif isinstance(result, list):
             return f"Possible answers {result}", None
         else:
-            return "Answer not found :( Please ask Kartoffel to add it", None
+            return r"Answer to quiz not found :( Please ask Kartoffel to add it. You can also check all the answer by writing `%answers` (Use ! if you meant to send a math question instead)", None
+    
+    elif p_message == 'kartoffel':
+        return r'https://tenor.com/view/potato-potatoes-tates-taties-yummy-gif-5444388407561106351', None

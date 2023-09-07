@@ -1,6 +1,7 @@
 import re
 import pandas as pd
 
+# Get specific answers
 def quizanswer(my_str):
 
     answer = []
@@ -11,11 +12,11 @@ def quizanswer(my_str):
 
     # Fill the dictionary
     for index, row in answers.iterrows():
-        quest = re.sub('[^a-z]', '', row['Question'].lower())
+        quest = re.sub('[^a-z0-9]', '', row['Question'].lower())
         answerdict[quest] = row['Answer']
 
     # Clean the quiz question
-    quest = re.sub('[^a-z]', '', my_str.lower())
+    quest = re.sub('[^a-z0-9]', '', my_str.lower())
 
     # See if you have the question, and fill possible answers
     for key, item in answerdict.items():
@@ -29,3 +30,21 @@ def quizanswer(my_str):
         return answer
     
     return None
+
+# Get all questions and answers
+def quizanswers():
+    answerstring = '```\n'
+
+    # Get questions and answers
+    answers = pd.read_excel('quiz.xlsx')
+
+    # Fill the string with answers
+    for index, row in answers.iterrows():
+        answerstring += row['Question']
+        answerstring += ' - '
+        answerstring += row['Answer']
+        answerstring += '\n\n'
+
+    answerstring += '```'
+    
+    return answerstring
