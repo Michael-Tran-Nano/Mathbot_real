@@ -3,7 +3,7 @@ import responses
 
 async def send_message(message, user_message, is_private):
     try:
-        response, file = responses.handle_response(user_message, message.author.mention)
+        response, file = responses.handle_response(user_message, tagname=message.author.mention, username=message.author)
 
         if is_private:
             await message.author.send(response, file=file)

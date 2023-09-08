@@ -1,18 +1,18 @@
-from mathquiz import answer
+from mathquiz import answer, insertprice, pricelist
 from quiz import quizanswer, quizanswers
 import random
 import discord
 import re
 
-def handle_response(message, name): # You get string and or file name
+def handle_response(message, tagname=None, username=None): # You get string and or file name
 
     p_message = message.lower() # make lower case
 
     if p_message == 'hello': # make more possible outcomes
         messages = [("Hey there!", None),
-                    (f"Hello {name}", None),
+                    (f"Hello {tagname}", None),
                     ('Hello Logen member :D', None),
-                    (f"Hello {name}, how are you doing today?", None),
+                    (f"Hello {tagname}, how are you doing today?", None),
                     (None, discord.File('fellow.gif')),
                     ("Hello let\'s dig a lot of maps today :bone: :map:", None),
                     (":wink:", None)]
@@ -54,6 +54,31 @@ def handle_response(message, name): # You get string and or file name
 
     # Math equation given
     elif p_message[0] == '!':
+        
+        # Add new price
+        if p_message.startswith('!:'):
+            
+            # Check for permission
+            if str(username) not in ['smartlatios', 'illogicalpuzzle']:
+                return "You do not have permission to add prices >:D", None
+
+            try:
+                res = insertprice(p_message[2:])
+
+                if isinstance(res, tuple):
+                    hat, price = res
+                    return f"{hat} has been added to the list with the price {price}", None
+
+                elif isinstance(res, str):
+                    return res, None
+                
+            except Exception as e:
+                print(e)
+                return "Something went wrong with adding a new hat :( Try again", None
+
+        # Pricelist
+        if p_message.startswith('!pricelist'):
+            return pricelist(), None
 
         try:
             result = answer(p_message[1:])
@@ -62,10 +87,11 @@ def handle_response(message, name): # You get string and or file name
                 return f'The answer is: {math} = {total}', None
             
             elif isinstance(result, str):
-                return f'The hat <{result}> is not found in my price list. Please ask Kartoffel to update it (use % if you meant to ask about a quiz question)', None
+                return f'The hat <{result}> is not found in my price list. Please ask Kartoffel to update it. You can check all prices by using `!pricelist` (use % if you meant to ask about a quiz question)', None
             else:
                 return "Something went wrong :( Try again", None
-        except Exception:
+        except Exception as e:
+            print(e)
             return "Something went wrong :( Try again", None
         
         # make something for the time
