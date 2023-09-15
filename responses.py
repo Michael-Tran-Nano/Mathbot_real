@@ -1,5 +1,6 @@
 from mathquiz import answer, insertprice, pricelist
 from quiz import quizanswer, quizanswers
+from imageeditor import maker
 import random
 import discord
 import re
@@ -115,5 +116,15 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         else:
             return r"Answer to quiz not found :( Please ask Kartoffel to add it. You can also check all the answer by writing `%answers` (Use ! if you meant to send a math question instead)", None
     
+    elif p_message.startswith('bingo'):
+        if 'random' in p_message:
+            message, boo = maker('', randomplate=True)
+        else:
+            message, boo = maker(p_message[len('bingo'):])
+        if boo:
+            return message, discord.File('bingoplate.png')
+        else:
+            return message, None
+
     elif p_message == 'kartoffel':
         return r'https://tenor.com/view/potato-potatoes-tates-taties-yummy-gif-5444388407561106351', None
