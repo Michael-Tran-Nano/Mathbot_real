@@ -118,9 +118,9 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     
     elif p_message.startswith('bingo'):
         if 'random' in p_message:
-            message, boo = maker('', randomplate=True)
+            message, boo = maker('', randomplate=True, name=username)
         else:
-            message, boo = maker(p_message[len('bingo'):])
+            message, boo = maker(p_message[len('bingo'):], name=username)
         if boo:
             return message, discord.File('bingoplate.png')
         else:
