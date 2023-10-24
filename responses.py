@@ -10,7 +10,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     # Make lower case to simplify recognition
     p_message = message.lower()
 
-# Quiz question
+    # Quiz question
     if p_message[0] == '%':
         
         # Get all questions and answers
@@ -37,7 +37,6 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         
         # Add new price
         if p_message.startswith('!:'):
-
             try:
                 return insertprice(p_message[2:], str(username)), None
                             
@@ -51,13 +50,11 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         # Try to answer math question
         try:
             return answer(p_message[1:]), None
-            
         except Exception as e:
             print(e)
             return "Something went wrong :( Try again", None
 
     elif p_message == 'time':
-
         with open('time.txt', 'r') as f:
             time = f.readline()
 
