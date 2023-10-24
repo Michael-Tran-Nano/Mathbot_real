@@ -1,2 +1,3 @@
 name,numbers,randomplate
 
+smartlatios,[29, 30, 36, 13, 18, 35, 21, 6, 3],True

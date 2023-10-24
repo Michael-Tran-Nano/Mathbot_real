@@ -1,9 +1,10 @@
-from PIL import Image # Make it possible to extract statistics
+from PIL import Image
 import random
 
+# Positions of the tiles
 positions = [(38, 271), (99, 271), (160, 271), (38, 332), (99, 332), (160, 332), (38, 393), (99, 393), (160, 393)]
 
-def maker(numbers, randomplate=False, name='Null'): #get a string with numbers
+def maker(numbers: str, randomplate=False, name='Null'):
 
     if randomplate == False:
         numbers = numbers.split()
@@ -23,12 +24,13 @@ def maker(numbers, randomplate=False, name='Null'): #get a string with numbers
             x, y = pos
             tile = Image.open(f"bingo/{numbers[i]}.png")
             canvas.paste(tile, (x, y))
-        except Exception:
+        except FileNotFoundError:
             return f"I could not find hat number {numbers[i]}. Are you sure that is valid? The valid numbers are in the range 1-42", False
         
     tile.close()
     canvas.save('bingoplate.png')
 
+    # Make a log
     with open("bingolog.txt", "a") as f:
         f.write(f"{name},{numbers},{randomplate}\n")
 
