@@ -25,11 +25,11 @@ def quizanswer(my_str):
     
     # See if there is one or more possible answers
     if len(answer) == 1:
-        return f"The answer is: {answer[0]}", None
+        return f"The answer is: {answer[0]}"
     elif len(answer) > 1:
-        return f"Possible answers: {', '.join(answer)}", None
+        return f"Possible answers: {', '.join(answer)}"
     
-    return r"Answer to quiz not found :( Please ask Kartoffel to add it. You can also check all the answer by writing `%answers` (Use ! if you meant to send a math question instead)", None
+    return r"Answer to quiz not found :( Please ask Kartoffel to add it. You can also check all the answer by writing `%answers` (Use ! if you meant to send a math question instead)"
 
 # Make a string with all the answers
 answerstring = '```\n'
@@ -43,4 +43,4 @@ answerstring += '```'
 
 # Get all questions and answers
 def quizanswers():
-    return answerstring, None
+    return answerstring

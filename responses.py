@@ -15,10 +15,10 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         
         # Get all questions and answers
         if p_message == r"%answers":
-            return quizanswers()
+            return quizanswers(), None
         
         # Find answer to specific question
-        return quizanswer(p_message[1:])
+        return quizanswer(p_message[1:]), None
     
     # Make bingo plates
     elif p_message.startswith('bingo'):
@@ -37,22 +37,10 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         
         # Add new price
         if p_message.startswith('!:'):
-            
-            # Check for permission
-            if str(username) not in ['smartlatios', 'illogicalpuzzle']:
-                return "You do not have permission to add prices >:D", None
 
             try:
-                res = insertprice(p_message[2:])
-
-                if isinstance(res, tuple):
-                    hat, price = res
-                    return f"{hat} has been added to the list with the price {price}", None
-
-                # Something went wrong
-                elif isinstance(res, str):
-                    return res, None
-                
+                return insertprice(p_message[2:], str(username)), None
+                            
             except Exception:
                 return "Something went wrong with adding a new hat :( Try again", None
 
@@ -62,15 +50,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
 
         # Try to answer math question
         try:
-            result = answer(p_message[1:])
-            if isinstance(result, tuple):
-                math, total = result
-                return f'The answer is: {math} = {total}', None
-            
-            elif isinstance(result, str):
-                return f'The hat <{result}> is not found in my price list. Please ask Kartoffel to update it. You can check all prices by using `!pricelist` (use % if you meant to ask about a quiz question)', None
-            else:
-                return "Something went wrong :( Try again", None
+            return answer(p_message[1:]), None
             
         except Exception as e:
             print(e)

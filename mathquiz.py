@@ -2,39 +2,25 @@ import re
 import pandas as pd
 from openpyxl import load_workbook
 
-def pricelist():
-    answerstring = '```\n'
+# Get hats and prices
+prices = pd.read_excel('prices.xlsx')
 
-    # Get hats and prices
-    answers = pd.read_excel('prices.xlsx')
+# Get the prices and put it in a dictionary
+pridict = {}
+for _, row in prices.iterrows():
+    pridict[row['Hat'].lower()] = row['Price']
 
-    # Fill the string with answers
-    for index, row in answers.iterrows():
-        answerstring += f"{row['Hat']:<25s}"
-        answerstring += '='
-        answerstring += f"{str(row['Price']):>7s}"
-        answerstring += '\n'
+def insertprice(my_str, username):
 
-    answerstring += '```'
+    # Check for permission
+    if str(username) not in ['smartlatios', 'illogicalpuzzle']:
+        return "You do not have permission to add prices >:D"
     
-    return answerstring
-
-
-def insertprice(my_str):
-
     hat, price = my_str.split("=")
 
     # Remove white space
     hat = hat.strip()
     price = price.strip()
-
-    # Get the prices and put it in a dictionary
-    prices = pd.read_excel('prices.xlsx')
-    pridict = {}
-
-    # Fill the dictionary
-    for index, row in prices.iterrows():
-        pridict[row['Hat'].lower()] = row['Price']
 
     # Check if hat is already in the list
     if hat.lower() in pridict:
@@ -44,27 +30,20 @@ def insertprice(my_str):
     if not price.isnumeric():
         return f"{price} is not a valid price"
     
+    # Add to Excel
     wb = load_workbook('prices.xlsx')
-
-    # Select First Worksheet
-    ws = wb.worksheets[0]
-
+    ws = wb.worksheets[0] # Select First Worksheet
     ws.append([hat, price])
     wb.save('prices.xlsx')
 
-    return hat, price
+    # Add in the current dictionary
+    pridict[hat] = price
+
+    return f"{hat} has been added to the list with the price {price}"
 
 
 # Get the math calculation
 def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * Molotov'
-
-    # Get the prices and put it in a dictionary
-    prices = pd.read_excel('prices.xlsx')
-    pridict = {}
-
-    # Fill the dictionary
-    for index, row in prices.iterrows():
-        pridict[row['Hat'].lower()] = row['Price']
 
     # Get the individual hats and clean it
     hats = re.split('-|\+|\*', my_str)
@@ -83,7 +62,7 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
 
         # Check if hats exist. Return that hat if it does not exist
         if hat not in pridict:
-            return hat
+            return f'The hat <{hat}> is not found in my price list. Please ask Kartoffel to update it. You can check all prices by using `!pricelist` (use % if you meant to ask about a quiz question)'
         else:
             math += str(pridict[hat])
 
@@ -92,6 +71,25 @@ def answer(my_str): # my_str = 'Kjærlighetsblomst - (Giftering med diamant) * M
 
     result = eval(math)
 
-    # Give result as a tuple
+    # Check if you have an int
     if isinstance(result, int):
-        return (re.sub('\*', '\\\*' , math), result)
+        math = re.sub('\*', '\\\*' , math)
+        return f'The answer is: {math} = {result}'
+    else:
+        return "Something went wrong :( Try again"
+
+def pricelist():
+
+    # Load again
+    prices = pd.read_excel('prices.xlsx')
+
+    # Fill the string with answers
+    answerstring = '```\n'
+    for _, row in prices.iterrows():
+        answerstring += f"{row['Hat']:<25s}"
+        answerstring += '='
+        answerstring += f"{str(row['Price']):>7s}"
+        answerstring += '\n'
+    answerstring += '```' 
+
+    return answerstring
