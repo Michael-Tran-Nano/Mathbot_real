@@ -10,8 +10,30 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     # Make lower case to simplify recognition
     p_message = message.lower()
 
+# Quiz question
+    if p_message[0] == '%':
+        
+        # Get all questions and answers
+        if p_message == r"%answers":
+            return quizanswers()
+        
+        # Find answer to specific question
+        return quizanswer(p_message[1:])
+    
+    # Make bingo plates
+    elif p_message.startswith('bingo'):
+        if 'random' in p_message:
+            message, success = maker('', randomplate=True, name=username)
+        else:
+            message, success = maker(p_message[len('bingo'):], name=username)
+
+        if success: # Bingo plate made
+            return message, discord.File('bingoplate.png')
+        else: # No bingo plate made
+            return message, None
+
     # Math equation given
-    if p_message[0] == '!':
+    elif p_message[0] == '!':
         
         # Add new price
         if p_message.startswith('!:'):
@@ -31,8 +53,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
                 elif isinstance(res, str):
                     return res, None
                 
-            except Exception as e:
-                print(e)
+            except Exception:
                 return "Something went wrong with adding a new hat :( Try again", None
 
         # Pricelist
@@ -74,35 +95,6 @@ def handle_response(message, tagname=None, username=None): # You get string and 
             return f'The new time has been set to XX:{no:02d}', None
         else:
             return f'\"{no}\" is not recognized as a valid time. Please use a number in the range 0-59', None
-
-    # Quiz question
-    elif p_message[0] == '%':
-        
-        # Get all questions and answers
-        if p_message == r"%answers":
-            return quizanswers(), None
-        
-        # Find answer to specific question
-        result = quizanswer(p_message[1:])
-
-        if isinstance(result, str): # One possible answer
-            return f"The answer is: {result}", None
-        elif isinstance(result, list): # More than more possible answer
-            return f"Possible answers {result}", None
-        else:
-            return r"Answer to quiz not found :( Please ask Kartoffel to add it. You can also check all the answer by writing `%answers` (Use ! if you meant to send a math question instead)", None
-    
-    # Make bingo plates
-    elif p_message.startswith('bingo'):
-        if 'random' in p_message:
-            message, success = maker('', randomplate=True, name=username)
-        else:
-            message, success = maker(p_message[len('bingo'):], name=username)
-
-        if success: # Bingo plate made
-            return message, discord.File('bingoplate.png')
-        else: # No bingo plate made
-            return message, None
 
     # The rest are simply funny chat responses
     elif p_message == 'hello':
