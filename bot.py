@@ -1,5 +1,6 @@
 import discord
 import responses
+from datetime import datetime
 
 async def send_message(message, user_message, is_private):
 
@@ -38,10 +39,15 @@ def run_discord_bot():
         user_message = str(message.content)
         channel = str(message.channel)
 
-        print(f'{username} said: "{user_message}" ({channel})')
+        now = datetime.now()
+        message_log = f'{username} said: "{user_message}" ({channel}), {now}'
+
+        print(message_log)
+        with open("chatlog.txt", "a") as f:
+            f.write(message_log + '\n')
 
         #Check if it is a private message, and send relevant information
-        if user_message[0] == '?':
+        if len(user_message) > 0 and user_message[0] == '?':
             user_message = user_message[1:] 
             await send_message(message, user_message, is_private=True)
         else:

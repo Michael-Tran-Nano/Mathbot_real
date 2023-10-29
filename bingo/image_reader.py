@@ -4,7 +4,8 @@ import pyautogui
 # im = pyautogui.screenshot(region=(x+2, y+1, dx-4, dy+40))
 # im.save('test.png')
 
-for i, pos in enumerate(pyautogui.locateAllOnScreen('tile.png'), 35):
+# Find images and number them
+for i, pos in enumerate(pyautogui.locateAllOnScreen('tile.png'), 1):
     x, y, dx, dy = pos
     im = pyautogui.screenshot(region=(x+2, y+1, dx-4, dy+40))
     im.save(f"{i}.png")
