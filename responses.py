@@ -1,6 +1,7 @@
 from mathquiz import answer, insertprice, pricelist
 from quiz import quizanswer, quizanswers
 from imageeditor import maker
+# from gif_rygsæk_discord import bag_maker
 import random
 import discord
 import re
@@ -53,6 +54,18 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         except Exception as e:
             print(e)
             return "Something went wrong :( Try again", None
+
+    # elif p_message.startswith('bag_maker'):
+    #     try:
+    #         message, success = bag_maker(p_message[len('bag_maker'):])
+    #         if success:
+    #             return message, discord.File('HP_bytte_image.gif')
+    #         else: 
+    #             return message, None
+
+    #     except Exception as e:
+    #         print(e)
+    #         return "Something went wrong :( Try again", None
 
     elif p_message == 'time':
         with open('time.txt', 'r') as f:
