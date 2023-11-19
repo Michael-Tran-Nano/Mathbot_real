@@ -2,7 +2,10 @@ from PIL import Image
 import random
 
 # Positions of the tiles
-positions = [(38, 271), (99, 271), (160, 271), (38, 332), (99, 332), (160, 332), (38, 393), (99, 393), (160, 393)]
+# Small plate
+# positions = [(38, 271), (99, 271), (160, 271), (38, 332), (99, 332), (160, 332), (38, 393), (99, 393), (160, 393)]
+# Big plate
+positions = [(46, 280), (130, 280), (213, 280), (46, 364), (130, 364), (213, 364), (46, 447), (130, 447), (213, 447)]
 
 def maker(numbers: str, randomplate=False, name='Null'):
 
@@ -17,7 +20,7 @@ def maker(numbers: str, randomplate=False, name='Null'):
     if randomplate:
         numbers = random.sample(range(1, 42), 9)
 
-    canvas = Image.open("bingo/autumn_bingo_plate.png").convert("RGB")
+    canvas = Image.open("bingo/Bingoplate_november_2.png").convert("RGB")
     
     for i, pos in enumerate(positions):
         try:

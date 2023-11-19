@@ -5,8 +5,9 @@ import pyautogui
 # im.save('test.png')
 
 # Find images and number them
-for i, pos in enumerate(pyautogui.locateAllOnScreen('tile.png'), 22):
+coor_str = ''
+for pos in pyautogui.locateAll("box.png", "Bingoplate_november_2.png"):
     x, y, dx, dy = pos
-    im = pyautogui.screenshot(region=(x+2, y+1, dx-4, dy+40))
-    im.save(f"{i}.png")
-    print(f'{i}.png saved')
+    coor_str += f"({x+18}, {y+18}), "
+
+print(coor_str)

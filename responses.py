@@ -24,14 +24,15 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     # Make bingo plates
     elif p_message.startswith('bingo'):
         if 'random' in p_message:
-            message, success = maker('', randomplate=True, name=username)
+            #message, success = maker('', randomplate=True, name=username)
+            return "Sorry, the random function has been turned off for now. Please use your own 9 numbers instead :(", discord.File('bingo/howto.png')
         else:
             message, success = maker(p_message[len('bingo'):], name=username)
 
         if success: # Bingo plate made
             return message, discord.File('bingoplate.png')
         else: # No bingo plate made
-            return message, None
+            return message, discord.File('bingo/howto.png')
 
     # Math equation given
     elif p_message[0] == '!':
