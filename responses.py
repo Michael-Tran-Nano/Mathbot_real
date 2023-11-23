@@ -22,7 +22,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         return quizanswer(p_message[1:]), None
     
     # Make bingo plates
-    elif p_message.startswith('bingo'):
+    elif p_message.startswith('bingo '):
         if 'random' in p_message:
             #message, success = maker('', randomplate=True, name=username)
             return "Sorry, the random function has been turned off for now. Please use your own 9 numbers instead :(", discord.File('bingo/howto.png')

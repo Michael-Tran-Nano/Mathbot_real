@@ -1,5 +1,6 @@
 from PIL import Image
 import random
+import re
 
 # Positions of the tiles
 # Small plate
@@ -10,6 +11,7 @@ positions = [(46, 280), (130, 280), (213, 280), (46, 364), (130, 364), (213, 364
 def maker(numbers: str, randomplate=False, name='Null'):
 
     if randomplate == False:
+        numbers = re.sub("\D", " ", numbers) # remove non-numbers
         numbers = numbers.split()
         if len(set(numbers)) != 9:
             return "I could not find 9 unique numbers. Try again. For example: `bingo 1 2 3 4 5 6 7 8 9`. The valid numbers are in the range 1-42", False
