@@ -1,5 +1,6 @@
-from mathquiz import answer, insertprice, pricelist
-from quiz import quizanswer, quizanswers
+#from mathquiz import answer, insertprice, pricelist
+# from quiz import quizanswer, quizanswers
+from vb_quiz import vb_answer, vb_answers
 from imageeditor import maker
 # from gif_rygsæk_discord import bag_maker
 import random
@@ -11,15 +12,24 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     # Make lower case to simplify recognition
     p_message = message.lower()
 
-    # Quiz question
+    # VB question
     if p_message[0] == '%':
-        
         # Get all questions and answers
         if p_message == r"%answers":
-            return quizanswers(), None
+            return vb_answers(), None
         
         # Find answer to specific question
-        return quizanswer(p_message[1:]), None
+        return vb_answer(p_message[1:]), None
+
+    # # Quiz question
+    # if p_message[0] == '%':
+        
+    #     # Get all questions and answers
+    #     if p_message == r"%answers":
+    #         return quizanswers(), None
+        
+    #     # Find answer to specific question
+    #     return quizanswer(p_message[1:]), None
     
     # Make bingo plates
     elif p_message.startswith('bingo '):
@@ -34,27 +44,27 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         else: # No bingo plate made
             return message, discord.File('bingo/howto.png')
 
-    # Math equation given
-    elif p_message[0] == '!':
+    # # Math equation given
+    # elif p_message[0] == '!':
         
-        # Add new price
-        if p_message.startswith('!:'):
-            try:
-                return insertprice(p_message[2:], str(username)), None
+    #     # Add new price
+    #     if p_message.startswith('!:'):
+    #         try:
+    #             return insertprice(p_message[2:], str(username)), None
                             
-            except Exception:
-                return "Something went wrong with adding a new hat :( Try again", None
+    #         except Exception:
+    #             return "Something went wrong with adding a new hat :( Try again", None
 
-        # Pricelist
-        if p_message.startswith('!pricelist'):
-            return pricelist(), None
+    #     # Pricelist
+    #     if p_message.startswith('!pricelist'):
+    #         return pricelist(), None
 
-        # Try to answer math question
-        try:
-            return answer(p_message[1:]), None
-        except Exception as e:
-            print(e)
-            return "Something went wrong :( Try again", None
+    #     # Try to answer math question
+    #     try:
+    #         return answer(p_message[1:]), None
+    #     except Exception as e:
+    #         print(e)
+    #         return "Something went wrong :( Try again", None
 
     # elif p_message.startswith('bag_maker'):
     #     try:
@@ -68,24 +78,24 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     #         print(e)
     #         return "Something went wrong :( Try again", None
 
-    elif p_message == 'time':
-        with open('time.txt', 'r') as f:
-            time = f.readline()
+    # elif p_message == 'time':
+    #     with open('time.txt', 'r') as f:
+    #         time = f.readline()
 
-        return f'The time for next task at Ryttern is at XX:{int(time):02d}', None
+    #     return f'The time for next task at Ryttern is at XX:{int(time):02d}', None
 
-    elif p_message.startswith('set time'):
+    # elif p_message.startswith('set time'):
         
-        # Take the number from the string
-        no = int(re.sub('[^0-9]', '', p_message))
+    #     # Take the number from the string
+    #     no = int(re.sub('[^0-9]', '', p_message))
 
-        # Check if valid string
-        if 0 <= no < 60:
-            with open('time.txt', 'w') as f:
-                f.write(str(no))
-            return f'The new time has been set to XX:{no:02d}', None
-        else:
-            return f'\"{no}\" is not recognized as a valid time. Please use a number in the range 0-59', None
+    #     # Check if valid string
+    #     if 0 <= no < 60:
+    #         with open('time.txt', 'w') as f:
+    #             f.write(str(no))
+    #         return f'The new time has been set to XX:{no:02d}', None
+    #     else:
+    #         return f'\"{no}\" is not recognized as a valid time. Please use a number in the range 0-59', None
 
     # The rest are simply funny chat responses
     elif p_message == 'hello':
@@ -93,7 +103,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
                     (f"Hello {tagname}", None),
                     ('Hello Logen member :D', None),
                     (f"Hello {tagname}, how are you doing today?", None),
-                    (None, discord.File('fellow.gif')),
+                    (None, discord.File('images/fellow.gif')),
                     ("Hello let\'s dig a lot of maps today :bone: :map:", None),
                     (":wink:", None)]
         
@@ -103,7 +113,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
         return r'https://tenor.com/view/potato-potatoes-tates-taties-yummy-gif-5444388407561106351', None
     
     elif p_message == 'gib motivation':
-        return ":tada: :partying_face: :tada:", discord.File('proud.gif')
+        return ":tada: :partying_face: :tada:", discord.File('images/proud.gif')
     
     elif p_message == '69':
         return "( ͡° ͜ʖ ͡°)", None
@@ -113,4 +123,4 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     
     elif p_message == "bomb ryttern":
         return (":bomb: :bomb: :bomb:",
-                discord.File(random.choice(['bomb1.gif', 'bomb2.gif'])))
+                discord.File(random.choice(['images/bomb1.gif', 'images/bomb2.gif'])))

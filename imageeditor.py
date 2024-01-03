@@ -22,7 +22,7 @@ def maker(numbers: str, randomplate=False, name='Null'):
     if randomplate:
         numbers = random.sample(range(1, 42), 9)
 
-    canvas = Image.open("bingo/final_plate_julebingo.png").convert("RGB")
+    canvas = Image.open("bingo/nyars_bingo.png").convert("RGB")
     
     for i, pos in enumerate(positions):
         try:
