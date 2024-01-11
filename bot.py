@@ -1,6 +1,8 @@
 import discord
 import responses
 from datetime import datetime
+import json
+import os
 
 async def send_message(message, user_message, is_private):
 
@@ -18,8 +20,14 @@ async def send_message(message, user_message, is_private):
         print(e)
 
 def run_discord_bot():
-    TOKEN = 'MTE0NzE3MDk4NjkyODY0ODMzMw.GQmxzc.j4MfLM6aRxEu_74zfPqSzmNaQ7170NU1Tle6tk' # Testbot
-    # TOKEN = "MTE0Njc1MjAzMzQ5NjUxNDYyMw.GOSkwd.ignHOCUcNltTo64TraNtJY7BHU3PEzaGeqbbdQ" # Logen
+    if os.path.isfile('tokens.json'):
+        token_path = 'tokens.json'
+    else:
+        token_path = '../tokens.json'
+
+    with open(token_path) as json_file:
+        tokens = json.load(json_file)
+    TOKEN = tokens['Testbot'] # Testbot, Logenbot
     intents = discord.Intents.default()
     intents.message_content = True
     client = discord.Client(intents=intents)
