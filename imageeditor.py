@@ -2,6 +2,7 @@ from PIL import Image
 import random
 import re
 
+
 # Positions of the tiles
 # Small plate
 # positions = [(38, 271), (99, 271), (160, 271), (38, 332), (99, 332), (160, 332), (38, 393), (99, 393), (160, 393)]
@@ -14,7 +15,13 @@ def maker(numbers: str, randomplate=False, name='Null'):
         numbers = re.sub("\D", " ", numbers) # remove non-numbers
         numbers = numbers.split()
         if len(set(numbers)) != 9:
-            return "I could not find 9 unique numbers. Try again. For example: `bingo 1 2 3 4 5 6 7 8 9`. The valid numbers are in the range 1-42", False
+            if (len(numbers) != 9):
+                return f"I could not find 9 numbers. I found {len(numbers)} numbers instead!", False
+            else:
+                for i in numbers:
+                    if (numbers.count(i) > 1):
+                        return f'You wrote the number "{i}" {numbers.count(i)} times. That does not make a valid plate...', False
+                return "I could not find 9 unique numbers. Try again. For example: `bingo 1 2 3 4 5 6 7 8 9`. The valid numbers are in the range 1-42", False
         
         # Make to integers
         numbers = [int(x) for x in numbers]
@@ -22,7 +29,7 @@ def maker(numbers: str, randomplate=False, name='Null'):
     if randomplate:
         numbers = random.sample(range(1, 42), 9)
 
-    canvas = Image.open("bingo/nyars_bingo.png").convert("RGB")
+    canvas = Image.open("bingo/BINGOPLATTA.png").convert("RGB")
     
     for i, pos in enumerate(positions):
         try:
@@ -38,7 +45,9 @@ def maker(numbers: str, randomplate=False, name='Null'):
     # Make a log
     with open("bingolog.txt", "a") as f:
         f.write(f"{name},{numbers},{randomplate}\n")
-
+    
+    if numbers == [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+        return r"What an original choice of plate :face_with_hand_over_mouth: https://tenor.com/view/spongebob-meme-spongebob-spongebob-squarepants-squidward-how-original-gif-20004154", True
     return "Here is your bingo plate, enjoy!", True
 
 

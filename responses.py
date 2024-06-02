@@ -35,7 +35,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
     elif p_message.startswith('bingo '):
         if 'random' in p_message:
             #message, success = maker('', randomplate=True, name=username)
-            return "Sorry, the random function has been turned off for now. Please use your own 9 numbers instead :(", discord.File('bingo/howto.png')
+            return "The random function is still turned off, and it will not be turned on again :angry:... Use a random generator yourself or something...", discord.File('bingo/howto.png')
         else:
             message, success = maker(p_message[len('bingo'):], name=username)
 
