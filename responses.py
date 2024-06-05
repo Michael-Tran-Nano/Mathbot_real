@@ -7,7 +7,7 @@ import random
 import discord
 import re
 
-def handle_response(message, tagname=None, username=None): # You get string and or file name
+def handle_response(message, context, tagname=None, username=None): # You get string and or file name
 
     # Make lower case to simplify recognition
     p_message = message.lower()
@@ -37,7 +37,7 @@ def handle_response(message, tagname=None, username=None): # You get string and 
             #message, success = maker('', randomplate=True, name=username)
             return "The random function is still turned off, and it will not be turned on again :angry:... Use a random generator yourself or something...", discord.File('bingo/howto.png')
         else:
-            message, success = maker(p_message[len('bingo'):], name=username)
+            message, success = maker(p_message[len('bingo'):], context, name=username)
 
         if success: # Bingo plate made
             return message, discord.File('bingoplate.png')

@@ -9,11 +9,13 @@ import re
 # Big plate
 positions = [(46, 280), (130, 280), (213, 280), (46, 364), (130, 364), (213, 364), (46, 447), (130, 447), (213, 447)]
 
-def maker(numbers: str, randomplate=False, name='Null'):
+def maker(numbers: str, context, randomplate=False, name='Null'):
 
     if randomplate == False:
         numbers = re.sub("\D", " ", numbers) # remove non-numbers
         numbers = numbers.split()
+
+        # See if something is wrong
         if len(set(numbers)) != 9:
             if (len(numbers) != 9):
                 return f"I could not find 9 numbers. I found {len(numbers)} numbers instead!", False
@@ -34,20 +36,36 @@ def maker(numbers: str, randomplate=False, name='Null'):
     for i, pos in enumerate(positions):
         try:
             x, y = pos
-            tile = Image.open(f"bingo/{numbers[i]}.png")
-            canvas.paste(tile, (x, y))
+            tile = Image.open(f"bingo/{numbers[i]}.png").convert("RGBA")
+            canvas.paste(tile, (x, y), tile)
         except FileNotFoundError:
             return f"I could not find hat number {numbers[i]}. Are you sure that is valid? The valid numbers are in the range 1-42", False
         
     tile.close()
     canvas.save('bingoplate.png')
-
-    # Make a log
-    with open("bingolog.txt", "a") as f:
-        f.write(f"{name},{numbers},{randomplate}\n")
+    canvas.close()
     
     if numbers == [1, 2, 3, 4, 5, 6, 7, 8, 9]:
         return r"What an original choice of plate :face_with_hand_over_mouth: https://tenor.com/view/spongebob-meme-spongebob-spongebob-squarepants-squidward-how-original-gif-20004154", True
+    if 69 in numbers:
+        return r"https://tenor.com/view/lenny-eyebrow-flirt-smile-gif-5516050", True
+    if 100 in numbers:
+        return "You are cool, but sadly, your plate is invalid...", True
+    
+    # Make a log for normal plates
+    with open("bingolog.txt", "a") as f:
+        f.write(f"{name},{numbers},{randomplate}\n")
+
+    if context != None:
+        name = str(name)
+        if (name in context.bingo_counter):
+            context.bingo_counter[name] += 1
+        else:
+            context.bingo_counter[name] = 1
+    
+        if (context.bingo_counter[name] > 2):
+            return f"This is at least your plate number {context.bingo_counter[name]} in this session. Are you really this indecisive? :rolling_eyes:", True
+
     return "Here is your bingo plate, enjoy!", True
 
 

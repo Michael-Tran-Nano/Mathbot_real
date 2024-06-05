@@ -3,12 +3,14 @@ import responses
 from datetime import datetime
 import json
 import os
+import context_object
+from collections import Counter
 
-async def send_message(message, user_message, is_private):
+async def send_message(message, user_message, context, is_private):
 
     # Try to get response to message
     try:
-        response, file = responses.handle_response(user_message, tagname=message.author.mention, username=message.author)
+        response, file = responses.handle_response(user_message, context, tagname=message.author.mention, username=message.author)
 
         if is_private:
             await message.author.send(response, file=file)
@@ -32,9 +34,20 @@ def run_discord_bot():
     intents.message_content = True
     client = discord.Client(intents=intents)
 
+    # Pass around relevant things
+    context = None
+
     @client.event
     async def on_ready():
         print(f'{client.user} is now running!')
+        nonlocal context
+        context = context_object.Context()
+        try:
+            with open("bingolog.txt") as f:
+                names = [line.split(',')[0] for line in f.readlines()]
+                context.bingo_counter = Counter(names)
+        except Exception:
+            print("Failed to read bingolog.txt")
 
     @client.event
     async def on_message(message):
@@ -57,8 +70,8 @@ def run_discord_bot():
         #Check if it is a private message, and send relevant information
         if len(user_message) > 0 and user_message[0] == '?':
             user_message = user_message[1:] 
-            await send_message(message, user_message, is_private=True)
+            await send_message(message, user_message, context, is_private=True)
         else:
-            await send_message(message, user_message, is_private=False)
+            await send_message(message, user_message, context, is_private=False)
 
     client.run(TOKEN)
