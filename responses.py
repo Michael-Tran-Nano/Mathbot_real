@@ -2,15 +2,19 @@
 # from quiz import quizanswer, quizanswers
 from vb_quiz import vb_answer, vb_answers
 from imageeditor import maker
+from hat_image_maker import make_hat_image
 # from gif_rygsæk_discord import bag_maker
 import random
 import discord
-import re
+# import re
+from new_hats import identify_hat
 
-def handle_response(message, context, tagname=None, username=None): # You get string and or file name
+def handle_response(message_obj, user_message, context): # You get string and or file name
+    tagname = message_obj.author.mention,
+    username = message_obj.author
 
     # Make lower case to simplify recognition
-    p_message = message.lower()
+    p_message = user_message.lower()
 
     # VB question
     if p_message[0] == '%':
@@ -37,12 +41,36 @@ def handle_response(message, context, tagname=None, username=None): # You get st
             #message, success = maker('', randomplate=True, name=username)
             return "The random function is still turned off, and it will not be turned on again :angry:... Use a random generator yourself or something...", discord.File('bingo/howto.png')
         else:
-            message, success = maker(p_message[len('bingo'):], context, name=username)
+            user_message, success = maker(p_message[len('bingo'):], context, name=username)
 
         if success: # Bingo plate made
-            return message, discord.File('bingoplate.png')
+            return user_message, discord.File('bingoplate.png')
         else: # No bingo plate made
-            return message, discord.File('bingo/howto.png')
+            return user_message, discord.File('bingo/howto.png')
+        
+    # Make a dressed up animal image
+    elif p_message[0] == '!':
+        p_message = p_message.replace('=', ':')
+
+        # Save new hat
+        if p_message.startswith('!save,'):
+            try:
+                response = identify_hat(p_message[len('!save,'):])
+                return response, discord.File('ready_animal_with_hat.png') # add a proper image
+            except KeyError as e:
+                return e, None # Attach guide
+            except Exception as e:
+                print(e)
+                return "Something went wrong, try to check your response gain", None # Make helping image
+
+        # make image
+        try:
+            make_hat_image(p_message[1:])
+            return "Here is your image. Enjoy", discord.File('ready_animal_with_hat.png') # Maybe give differnet possible responses
+        except KeyError as e:
+            return e, None
+        except Exception:
+            return "Something went wrong, try to check your response gain", None # Make helping image
 
     # # Math equation given
     # elif p_message[0] == '!':
