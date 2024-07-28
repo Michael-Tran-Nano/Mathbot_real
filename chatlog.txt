@@ -166,3 +166,52 @@ smartlatios said: "!save" (testbot), 24/07/2024 18:16:14
 smartlatios said: "!h:12" (testbot), 24/07/2024 18:36:03
 smartlatios said: "!save,name:skull,place:mouth" (testbot), 24/07/2024 18:36:49
 smartlatios said: "!save,name:skull,place:mouth" (testbot), 24/07/2024 18:37:10
+smartlatios said: "!type:wolf,head:rosa gladiator,belly:guld stjerne,mouth:lotus grønn" (testbot), 26/07/2024 12:23:50
+smartlatios said: "!t:wolf,h:rosa gladiator,b:guld stjerne,m:lotus grønn" (testbot), 26/07/2024 12:24:12
+smartlatios said: "!type:wolf,head:rosa gladiator,belly:guld stjerne,mouth:lotus grønn" (testbot), 26/07/2024 12:27:27
+smartlatios said: "!t:wolf,h:rosa gladiator,b:guld stjerne,m:lotus grønn" (testbot), 26/07/2024 12:27:34
+smartlatios said: "!save,n:snø,p:mouth" (testbot), 26/07/2024 12:29:38
+smartlatios said: "!save,n:snøkrystall,p:mouth" (testbot), 26/07/2024 12:34:05
+smartlatios said: "!save,n:snøkrystall,p:mouth" (testbot), 26/07/2024 12:34:28
+smartlatios said: "!save,n:store,p:head" (testbot), 26/07/2024 12:35:29
+smartlatios said: "!t:wolf,h:rosa gladiator,b:guld stjerne,m:lotus grønn" (testbot), 26/07/2024 13:15:21
+smartlatios said: "!t:wolf,h:rosa,b:guld stjerne,m:lotus grønn" (testbot), 26/07/2024 13:15:34
+smartlatios said: "!t:wolf,h:rosa,b:bulldog,m:lotus grønn" (testbot), 26/07/2024 13:15:56
+smartlatios said: "!t:wolf,h:rosa,b:bulldog,m:lotus grønn" (testbot), 26/07/2024 13:16:48
+smartlatios said: "!t:wolf,h:gladi,b:bulldog,m:lotus grønn" (testbot), 26/07/2024 13:17:13
+smartlatios said: "!t:wolf,h:gladi,b:bulldog,m:lotus grønn" (testbot), 26/07/2024 13:17:55
+smartlatios said: "!t:wolf,h:gladi,b:bull,m:l" (testbot), 26/07/2024 13:18:10
+smartlatios said: "!t:wolf,h:gladi,b:bull,m:l" (testbot), 26/07/2024 13:50:19
+smartlatios said: "!t:wolf,h:gladi,b:bull,m:l" (testbot), 26/07/2024 13:50:25
+smartlatios said: "!t:bear,h:rosa,b:bulldog,m:lotus grønn" (testbot), 26/07/2024 13:50:37
+smartlatios said: "!t:bear,h:rosa,b:stj,m:lotus grønn" (testbot), 26/07/2024 13:50:52
+smartlatios said: "!save,name:fortenner,place:mouth" (testbot), 26/07/2024 14:01:12
+smartlatios said: "!save,name:fortenner,place:mouth" (testbot), 26/07/2024 14:01:28
+smartlatios said: "!save,name:Fortenner,place:mouth" (testbot), 26/07/2024 14:02:40
+smartlatios said: "!save,name:Fortenner,place:mouth" (testbot), 26/07/2024 14:04:47
+smartlatios said: "!save,name:Fortenner,place:mouth" (testbot), 26/07/2024 14:05:19
+smartlatios said: "!save,name:Fortenner,place:mouth" (testbot), 26/07/2024 14:06:57
+smartlatios said: "!save,name:koko,place:mouth" (testbot), 26/07/2024 16:42:24
+smartlatios said: "!m:koko" (testbot), 26/07/2024 16:44:19
+smartlatios said: "!m:fortenner" (testbot), 26/07/2024 16:44:33
+smartlatios said: "!m:store" (testbot), 26/07/2024 16:46:41
+smartlatios said: "!noter" (testbot), 28/07/2024 15:28:48
+smartlatios said: "!bulldog" (testbot), 28/07/2024 15:29:31
+smartlatios said: "!bulldog, gull stjerne" (testbot), 28/07/2024 15:29:42
+smartlatios said: "!rosa gladiator, rød lotus, glasstjerne" (testbot), 28/07/2024 15:30:07
+smartlatios said: "!rosa gladiator, lotus rød, glasstjerne" (testbot), 28/07/2024 15:30:20
+smartlatios said: "!rosa gladiator, lotus rød, glasstjerne, wolf" (testbot), 28/07/2024 15:30:28
+smartlatios said: "!rosa gladiator, Hjertesåpebobler, glasstjerne, wolf" (testbot), 28/07/2024 15:31:08
+smartlatios said: "!rosa gladiator, Hjertesåpebobler, glasstjerne, wolf,gif" (testbot), 28/07/2024 15:31:15
+smartlatios said: "!alpelue, hjertesåpebobler, guld stjerne" (testbot), 28/07/2024 16:55:51
+smartlatios said: "!alpelue,hjertesåpebobler,guld stjerne, wolf" (testbot), 28/07/2024 17:00:38
+smartlatios said: "!alpelue,hjertesåpebobler,guld stjerne,gif" (testbot), 28/07/2024 17:05:21
+smartlatios said: "!alpe,hjertesåpe,guld stjerne" (testbot), 28/07/2024 17:07:13
+smartlatios said: "!alpe,hjertesåpe,glødelampe" (testbot), 28/07/2024 17:16:38
+smartlatios said: "!alpe,hjertesåpe,glødelampe" (testbot), 28/07/2024 17:17:14
+smartlatios said: "!speilegg" (testbot), 28/07/2024 17:17:36
+smartlatios said: "!Speilegg" (testbot), 28/07/2024 17:17:43
+smartlatios said: "`!help`" (testbot), 28/07/2024 17:20:25
+smartlatios said: "!flkdjflsf" (testbot), 28/07/2024 17:21:20
+smartlatios said: "!help" (testbot), 28/07/2024 17:29:33
+smartlatios said: "!fdlkfldsfs" (testbot), 28/07/2024 17:30:36

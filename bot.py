@@ -23,6 +23,7 @@ async def send_message(message, user_message, context, is_private):
         print(e)
 
 
+# Currently not used
 async def get_ref_image(message_obj):
     if message_obj.attachments:
         attachment = message_obj.attachments[0]  # Get the first attachment
@@ -45,6 +46,7 @@ async def get_ref_image(message_obj):
             with open("haystack.png", 'wb') as f:
                 f.write(data)
                 await message_obj.channel.send('Image loading successfully. Now I am going to scan it')
+
 
 
 def run_discord_bot():
@@ -93,12 +95,12 @@ def run_discord_bot():
         with open("chatlog.txt", "a") as f:
             f.write(message_log + '\n')
 
-        if '!save' in user_message:
-            try:
-                await get_ref_image(message)
-            except Exception as e:
-                await message.channel.send(e)
-                return None
+        # if '!save' in user_message:
+        #     try:
+        #         await get_ref_image(message)
+        #     except Exception as e:
+        #         await message.channel.send(e)
+        #         return None
 
         #Check if it is a private message, and send relevant information
         if len(user_message) > 0 and user_message[0] == '?':

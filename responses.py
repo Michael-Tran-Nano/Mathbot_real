@@ -2,12 +2,11 @@
 # from quiz import quizanswer, quizanswers
 from vb_quiz import vb_answer, vb_answers
 from imageeditor import maker
-from hat_image_maker import make_hat_image
 # from gif_rygsæk_discord import bag_maker
 import random
 import discord
+from snuseprofilen import image_maker
 # import re
-from new_hats import identify_hat
 
 def handle_response(message_obj, user_message, context): # You get string and or file name
     tagname = message_obj.author.mention,
@@ -50,27 +49,21 @@ def handle_response(message_obj, user_message, context): # You get string and or
         
     # Make a dressed up animal image
     elif p_message[0] == '!':
-        p_message = p_message.replace('=', ':')
-
-        # Save new hat
-        if p_message.startswith('!save,'):
-            try:
-                response = identify_hat(p_message[len('!save,'):])
-                return response, discord.File('ready_animal_with_hat.png') # add a proper image
-            except KeyError as e:
-                return e, None # Attach guide
-            except Exception as e:
-                print(e)
-                return "Something went wrong, try to check your response gain", None # Make helping image
+        
+        if p_message.startswith('!help'):
+            return r'Find the hat names here: https://hp.clonex.dk/', discord.File("snuseprofilen/instructions.png")
 
         # make image
         try:
-            make_hat_image(p_message[1:])
-            return "Here is your image. Enjoy", discord.File('ready_animal_with_hat.png') # Maybe give differnet possible responses
-        except KeyError as e:
-            return e, None
-        except Exception:
-            return "Something went wrong, try to check your response gain", None # Make helping image
+            messages, gif = image_maker.make_hat_image(p_message[1:])
+            image_path = 'snuseprofil.gif' if gif else 'snuseprofil.png'
+            if len(messages) == 0:
+                return "Here is your image. Enjoy", discord.File(image_path) # Maybe give differnet possible responses to make it fun
+            else:
+                return " ".join(messages), discord.File(image_path)
+            
+        except Exception as e:
+            return f"Something went wrong, try to check your response gain: {e}", discord.File("snuseprofilen/instructions.png") # Make helping image
 
     # # Math equation given
     # elif p_message[0] == '!':
