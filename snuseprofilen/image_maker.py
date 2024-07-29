@@ -1,6 +1,7 @@
 from PIL import Image
 import json
 from functools import reduce
+from math import ceil
 
 update_date = "27-07-24"
 
@@ -19,6 +20,19 @@ number_to_placement = {'1': 'head', '2': 'mouth', '12': 'dildo'}
 possible_instruction_types = {'head', 'belly', 'mouth', 'animal', 'color', 'dildo'}
 placements = ['head', 'mouth', 'belly'] # At dildo at a later time
 
+standard_colors = {
+    'red' : "#FF0000",
+    'blue' : "#0000FF",
+    'green' : "#00FF00",
+    'white' : "#000000",
+    'black' : "#404B50",
+    'orange': "#FFA500",
+    'purple': "#A020F0",
+    'pink' : "#FF00FF",
+    'yellow' : "#FFFF00",
+    'brown' : "#7F3300",
+    'gray': "#C0C0C0"
+}
 
 def make_hat_image(dress_string):
     gif = False
@@ -31,8 +45,12 @@ def make_hat_image(dress_string):
         if instruction in animals:
             commands['animal'] = instruction
             continue
-        # elif '#000000' in instruction:
-        #     continue
+        elif instruction.startswith('#'):
+            commands['color'] = instruction
+            continue
+        elif instruction in standard_colors:
+            commands['color'] = standard_colors[instruction]
+            continue
         elif instruction == 'gif':
             gif = True
             continue
@@ -67,7 +85,7 @@ def make_hat_image(dress_string):
     if gif:
         make_gif_from_command(commands, messages)
     else:
-        make_png_from_command(commands)
+        make_png_from_command(commands, messages)
 
     return messages, gif
 
@@ -85,9 +103,9 @@ def instruction_to_hatinfo(instruction, messages):
     messages.append(f'"{instruction}" was not found. Did you make a typo? It could also be a new hat that has not been added yet. Last update is from {update_date}. You can also write `!help` if you want to find the instructions.')
     return None
 
-def make_png_from_command(commands):
+def make_png_from_command(commands, messages):
     animal = commands['animal']
-    canvas = get_basic_animal_canvas(commands)
+    canvas = get_basic_animal_canvas(commands, messages)
 
     for placement in placements:
         if placement in commands:
@@ -100,7 +118,7 @@ def make_png_from_command(commands):
 
 def make_gif_from_command(commands, messages):
     animal = commands['animal']
-    canvas = get_basic_animal_canvas(commands)
+    canvas = get_basic_animal_canvas(commands, messages)
 
     animations = {}
     for placement in placements: 
@@ -150,14 +168,52 @@ def get_duration(rate):
     return 10000/rate - rate 
 
 
-def get_basic_animal_canvas(commands):
+def get_basic_animal_canvas(commands, messages):
     canvas = Image.open(f"snuseprofilen/base.png").convert("RGBA")
     animal = commands['animal']
     animal_img = Image.open(f"snuseprofilen/{animal}.png").convert("RGBA")
+    if 'color' in commands:
+        rgb_color = hex_to_rgb(commands['color'], messages)
+        recolor_animal(rgb_color, animal_img)
+
     x, y = base_coor_dict[animal]
     canvas.paste(animal_img, (x, y), animal_img)
     animal_img.close()
     return canvas
+
+
+def recolor_animal(rgb_color, animal_img):
+
+    img_data = animal_img.getdata()
+
+    fur_color = (*rgb_color, 255)
+    shadow_color = (*[ceil(x * 0.7) - 1 for x in rgb_color], 255)
+
+    new_data = []
+    for pixel in img_data:
+        if pixel == (255, 255, 255, 255):
+            new_data.append(fur_color)
+        elif pixel == (178, 178, 178, 255):
+            new_data.append(shadow_color)
+        else:
+            new_data.append(pixel)
+    
+    animal_img.putdata(new_data)
+
+
+def hex_to_rgb(hex_color, messages):
+    if hex_color.startswith('#'):
+        hex_color = hex_color[1:]
+    
+    try:
+        red = int(hex_color[0:2], 16)
+        green = int(hex_color[2:4], 16)
+        blue = int(hex_color[4:6], 16)
+    except Exception:
+        messages.append(f"I could not convert #{hex_color} into a color. Did you type it correctly?")
+        return (255, 255, 255)
+    
+    return (red, green, blue)
 
 
 def hat_placer(animal, hat_info, canvas,frame_no=0):
