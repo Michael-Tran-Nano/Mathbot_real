@@ -57,7 +57,7 @@ def run_discord_bot():
 
     with open(token_path) as json_file:
         tokens = json.load(json_file)
-    TOKEN = tokens['Logenbot'] # Testbot, Logenbot
+    TOKEN = tokens['Testbot'] # Testbot, Logenbot
     intents = discord.Intents.default()
     intents.message_content = True
     client = discord.Client(intents=intents)

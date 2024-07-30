@@ -14,11 +14,12 @@ base_coor_dict =  {'dog':(160-19, 80-9), 'wolf':(160-21, 80-14), 'cat':(160-15, 
 head_coor_dict =  {'dog': (11, 1), 'wolf': (12, 5), 'cat': (8, 6), 'bear': (13, 1)}
 mouth_coor_dict = {'dog': (3, 5), 'wolf': (3, 11), 'cat': (2, 12), 'bear': (2, 10)}
 belly_coor_dict = {'dog':(23, 4), 'wolf':(25, 10), 'cat':(19, 9), 'bear':(27, 2)}
-body_coor_dicts = {'head': head_coor_dict, 'mouth': mouth_coor_dict, 'belly': belly_coor_dict}
+dildo_coor_dict = {'dog':(23+17, 4+11), 'wolf':(25+16-1, 10+16), 'cat':(19+13-1, 9+9), 'bear':(27+21-1, 2+14)}
+body_coor_dicts = {'head': head_coor_dict, 'mouth': mouth_coor_dict, 'belly': belly_coor_dict, 'dildo': dildo_coor_dict}
 number_to_placement = {'1': 'head', '2': 'mouth', '12': 'dildo'}
 
 possible_instruction_types = {'head', 'belly', 'mouth', 'animal', 'color', 'dildo'}
-placements = ['head', 'mouth', 'belly'] # At dildo at a later time
+placements = ['dildo', 'head', 'mouth', 'belly']
 
 standard_colors = {
     'red' : "#FF0000",
@@ -69,8 +70,6 @@ def make_hat_image(dress_string):
             continue
         elif hat_info['u'] == '12':
             placement = 'dildo'
-            messages.append(f'Dildoes will be implemented at a later time. Stay tuned!')
-            continue
         else:
             placement = 'belly'
         
@@ -224,7 +223,19 @@ def hat_placer(animal, hat_info, canvas,frame_no=0):
     place_x, place_y = body_coor_dicts[placement][animal]
     hat_x, hat_y = hat_info['x'], hat_info['y']
 
-    hat = Image.open(f"snuseprofilen/hats/{img_no}.png").convert("RGBA") 
+    hat = Image.open(f"snuseprofilen/hats/{img_no}.png").convert("RGBA")
+    if placement == 'dildo':
+        crop_dildo(hat)
     x, y = base_x + place_x + hat_x, base_y + place_y + hat_y
     canvas.paste(hat, (x, y), hat)
     hat.close()
+
+
+def crop_dildo(dildo):
+    width, height = dildo.size
+    pixels = dildo.load()
+    left_side_width = width // 2
+
+    for x in range(left_side_width):
+        for y in range(height):
+            pixels[x, y] = (0, 0, 0, 0)
