@@ -12,14 +12,14 @@ with open("snuseprofilen/hat_data.json", "r", encoding='utf-8') as f:
 animals = {'dog', 'cat', 'bear', 'wolf'}
 base_coor_dict =  {'dog':(160-19, 80-9), 'wolf':(160-21, 80-14), 'cat':(160-15, 80-11), 'bear':(160-23, 80-10)}
 head_coor_dict =  {'dog': (11, 1), 'wolf': (12, 5), 'cat': (8, 6), 'bear': (13, 1)}
-mouth_coor_dict = {'dog': (3, 5), 'wolf': (3, 11), 'cat': (2, 12), 'bear': (2, 10)}
 belly_coor_dict = {'dog':(23, 4), 'wolf':(25, 10), 'cat':(19, 9), 'bear':(27, 2)}
+mouth_coor_dict = {'dog': (3, 5), 'wolf': (3, 11), 'cat': (2, 12), 'bear': (2, 10)}
 dildo_coor_dict = {'dog':(23+17, 4+11), 'wolf':(25+16-1, 10+16), 'cat':(19+13-1, 9+9), 'bear':(27+21-1, 2+14)}
-body_coor_dicts = {'head': head_coor_dict, 'mouth': mouth_coor_dict, 'belly': belly_coor_dict, 'dildo': dildo_coor_dict}
+body_coor_dicts = {'head': head_coor_dict, 'belly': belly_coor_dict, 'mouth': mouth_coor_dict, 'dildo': dildo_coor_dict}
 number_to_placement = {'1': 'head', '2': 'mouth', '12': 'dildo'}
 
 possible_instruction_types = {'head', 'belly', 'mouth', 'animal', 'color', 'dildo'}
-placements = ['dildo', 'head', 'mouth', 'belly']
+placements = ['dildo', 'head', 'belly', 'mouth']
 
 standard_colors = {
     'red' : "#FF0000",
